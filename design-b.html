@@ -1,0 +1,605 @@
+<title>착붙인테리어필름 시안 B</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* 레이아웃: 필름 샘플북처럼 둥근 칸을 맞물려 놓은 격자. 굵은 고딕 한 문장과 큰 전화번호가 먼저, 사진은 칸마다 한 장씩 */
+  :root {
+    --bg: #eceeef;
+    --surface: #ffffff;
+    --ink: #1b2024;
+    --muted: #5f6970;
+    --line: #d3d8db;
+    --accent: #2447c8;
+    --accent-ink: #ffffff;
+    --block: #1b2024;
+    --block-ink: #f3f5f6;
+    --block-muted: #a9b3ba;
+    --display: "Gothic A1", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --body: "Gothic A1", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --mono: "IBM Plex Mono", "D2Coding", Consolas, monospace;
+    --r: 22px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111417;
+      --surface: #1a1f23;
+      --ink: #eceff1;
+      --muted: #98a2a9;
+      --line: #2b3237;
+      --accent: #8fa8ff;
+      --accent-ink: #0b1330;
+      --block: #232a30;
+      --block-ink: #f3f5f6;
+      --block-muted: #a9b3ba;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111417;
+    --surface: #1a1f23;
+    --ink: #eceff1;
+    --muted: #98a2a9;
+    --line: #2b3237;
+    --accent: #8fa8ff;
+    --accent-ink: #0b1330;
+    --block: #232a30;
+    --block-ink: #f3f5f6;
+    --block-muted: #a9b3ba;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
+  .stack { display: grid; gap: 14px; }
+  .mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--muted); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* 상단 */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .top nav { display: flex; align-items: center; gap: 22px; font-size: 0.92rem; font-weight: 500; }
+  .top nav a.link { color: var(--muted); }
+  .top nav a.link:hover { color: var(--ink); }
+  .top .tel { font-family: var(--display); font-weight: 800; font-size: 1.15rem; white-space: nowrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.12); }
+  .btn.ghost { background: transparent; border-color: currentColor; color: inherit; }
+  .btn.small { min-height: 40px; padding: 0 16px; font-size: 0.92rem; }
+
+  /* 칸 */
+  .tile { min-width: 0; background: var(--surface); border-radius: var(--r); padding: clamp(20px, 3vw, 32px); }
+  .tile.dark { background: var(--block); color: var(--block-ink); }
+  .tile.dark .mono { color: var(--block-muted); }
+  .tile.photo { padding: 0; overflow: hidden; position: relative; background: var(--line); }
+  .tile.photo img { width: 100%; height: 100%; object-fit: cover; }
+  .tag {
+    position: absolute; left: 14px; bottom: 14px;
+    display: inline-flex; gap: 10px; align-items: baseline;
+    padding: 7px 14px; border-radius: 999px;
+    background: var(--surface); color: var(--ink);
+    font-size: 0.88rem; font-weight: 500;
+  }
+  .tag span { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; letter-spacing: -0.03em; text-wrap: balance; }
+  h1 { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.12; }
+  h2 { font-size: clamp(1.7rem, 4vw, 2.7rem); line-height: 1.2; }
+  h3 { font-size: 1.2rem; line-height: 1.35; letter-spacing: -0.02em; }
+  section { padding-block: clamp(36px, 6vw, 72px); }
+  .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 22px; }
+
+  /* 첫 화면 */
+  .hero { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; padding-top: 10px; }
+  .hero .say { grid-column: span 7; display: grid; gap: clamp(24px, 4vw, 44px); align-content: space-between; }
+  .hero .say p.sub { font-size: 1.08rem; color: var(--block-muted); max-width: 26em; margin-top: 18px; }
+  .hero .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero .shot { grid-column: span 5; min-height: 340px; }
+  .hero .fact { grid-column: span 4; display: grid; gap: 6px; align-content: start; }
+  .hero .fact b { font-family: var(--display); font-weight: 800; font-size: clamp(1.3rem, 2.6vw, 1.8rem); letter-spacing: -0.02em; line-height: 1.3; }
+
+  /* 전 · 후 */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ba .text { display: grid; gap: 18px; align-content: space-between; }
+  .ba .text p { color: var(--muted); max-width: 24em; margin-top: 14px; }
+  .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--bg); gap: 4px; justify-self: start; }
+  .seg button { font: inherit; font-weight: 500; min-height: 44px; padding: 0 24px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .ba .tile.photo { aspect-ratio: 4 / 5; max-width: 100%; }
+
+  /* 작업 */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filters button { font: inherit; font-size: 0.92rem; font-weight: 500; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--surface); color: var(--ink); cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .filters button span { font-family: var(--mono); font-size: 0.76rem; margin-left: 6px; opacity: 0.65; }
+  .works { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .works .tile.photo { aspect-ratio: 3 / 4; max-width: 100%; }
+
+  /* 샘플북 */
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; list-style: none; }
+  .swatches li { min-width: 0; display: grid; gap: 10px; }
+  .swatches i { display: block; aspect-ratio: 1; max-width: 100%; border-radius: 16px; border: 1px solid var(--line); background: var(--sw); }
+  .swatches b { font-weight: 500; display: block; line-height: 1.4; }
+
+  /* 범위 · 지역 */
+  .duo { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; }
+  .pills { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .pills li { padding: 8px 16px; border-radius: 999px; background: var(--bg); font-weight: 500; }
+  .tile.dark .pills li { background: transparent; border: 1px solid var(--block-muted); }
+  .duo p.note { margin-top: 16px; color: var(--muted); }
+  .tile.dark p.note { color: var(--block-muted); }
+
+  /* 진행 · 원칙 */
+  .four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; list-style: none; counter-reset: step; }
+  .four li { counter-increment: step; display: grid; gap: 8px; align-content: start; }
+  .four li::before { content: "0" counter(step); font-family: var(--mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 20px; }
+  .four span, .three p { color: var(--muted); font-size: 0.96rem; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .three .tile { display: grid; gap: 10px; align-content: start; }
+
+  /* 안내 */
+  .plain { list-style: none; margin-top: 14px; }
+  .plain li { padding: 13px 0; border-top: 1px solid var(--line); }
+  details { border-top: 1px solid var(--line); }
+  details:first-of-type { margin-top: 14px; }
+  summary { cursor: pointer; padding: 13px 0; font-weight: 500; }
+  details p { color: var(--muted); padding-bottom: 14px; }
+  .halves { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* 문의 */
+  .inquiry { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; }
+  fieldset { border: 0; }
+  legend, .field label { display: block; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--bg); cursor: pointer; font-weight: 500; user-select: none; }
+  .chips input { position: absolute; opacity: 0; pointer-events: none; }
+  .chips label:has(input:checked) { background: var(--accent); color: var(--accent-ink); }
+  .chips label:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .field { margin-top: 22px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .row > * { min-width: 0; }
+  input[type="text"], select { width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 0; border-radius: 12px; min-height: 48px; padding: 0 14px; }
+  select option { background: var(--surface); color: var(--ink); }
+  .note { display: grid; gap: 18px; align-content: start; }
+  .note pre { font: inherit; white-space: pre-wrap; min-height: 9em; }
+  .note .buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+  #copy-status { font-size: 0.9rem; min-height: 1.6em; color: var(--block-muted); }
+  .to { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--block-muted); }
+  .to b { display: block; font-family: var(--display); font-weight: 800; font-size: 1.3rem; user-select: all; }
+
+  /* 바로 연결 */
+  .links { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; list-style: none; }
+  .links li { min-width: 0; grid-column: span 4; }
+  .links li.big { grid-column: span 8; }
+  .links a, .links .static { display: grid; gap: 6px; height: 100%; align-content: space-between; }
+  .links .v { font-family: var(--display); font-weight: 800; font-size: clamp(1.2rem, 2.6vw, 1.7rem); letter-spacing: -0.02em; line-height: 1.3; user-select: all; }
+  .links li.big .v { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.1; }
+  .links .go { font-size: 0.9rem; font-weight: 500; color: var(--accent); margin-top: 18px; }
+  .links .tile.dark .go { color: var(--block-ink); }
+  .links button.go { font: inherit; font-size: 0.9rem; font-weight: 500; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+  .links a:hover .go { text-decoration: underline; }
+
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 26px 40px; font-size: 0.88rem; color: var(--muted); }
+
+  .dock { display: none; }
+  @media (max-width: 900px) {
+    .top nav a.link, .top .tel { display: none; }
+    .hero .say, .hero .shot { grid-column: span 12; }
+    .hero .shot { min-height: 0; aspect-ratio: 4 / 3; max-width: 100%; }
+    .hero .fact { grid-column: span 12; }
+    .ba, .duo, .halves, .inquiry { grid-template-columns: 1fr; }
+    .works { grid-template-columns: repeat(2, 1fr); }
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+    .four { grid-template-columns: repeat(2, 1fr); }
+    .three { grid-template-columns: 1fr; }
+    .links li, .links li.big { grid-column: span 12; }
+    body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+    .dock {
+      display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 8px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: var(--bg); border-top: 1px solid var(--line);
+    }
+    .dock a { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 999px; background: var(--surface); font-weight: 500; }
+    .dock a.main { background: var(--accent); color: var(--accent-ink); }
+  }
+  @media (max-width: 420px) {
+    .wrap { padding-inline: 16px; }
+    .row { grid-template-columns: 1fr; }
+    .tag span { display: none; }
+  }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">착붙인테리어필름</a>
+    <nav aria-label="바로가기">
+      <a class="link" href="#works">작업</a>
+      <a class="link" href="#steps">진행</a>
+      <a class="link" href="#contact">연락처</a>
+      <a class="tel num" href="tel:01071111126">010-7111-1126</a>
+      <a class="btn small" href="#inquiry">상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <div class="tile dark say">
+      <div>
+        <p class="mono">인테리어필름 시공 · StickTo_film</p>
+        <h1>뜯지 않고,<br>착 붙여서,<br>새것처럼.</h1>
+        <p class="sub">지금 있는 문과 가구 위에 필름을 입혀 공간의 인상을 바꿉니다. 철거가 없어 살면서도 시공할 수 있습니다.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="#inquiry">사진으로 견적 받기</a>
+        <a class="btn ghost" href="#works">최근 작업 보기</a>
+      </div>
+    </div>
+    <div class="tile photo shot">
+      <img src="img/kitchen-1.jpg" alt="흰색 싱크대와 우드 상판 수납장이 있는 주방" width="900" height="1200">
+      <span class="tag">주방 <span>2026.10</span></span>
+    </div>
+    <div class="tile fact"><span class="mono">지역</span><b>대구 · 경북</b></div>
+    <div class="tile fact"><span class="mono">상담 시간</span><b class="num">08:00 – 20:00</b></div>
+    <div class="tile fact"><span class="mono">시공</span><b>대표가 직접 시공</b></div>
+  </div>
+
+  <section>
+    <div class="ba">
+      <div class="tile text">
+        <div>
+          <p class="mono">시공 전 · 후</p>
+          <h2>같은 문,<br>같은 날.</h2>
+          <p>문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.</p>
+        </div>
+        <div class="seg" role="group" aria-label="시공 전후 보기">
+          <button type="button" id="show-before" aria-pressed="false">전</button>
+          <button type="button" id="show-after" aria-pressed="true">후</button>
+        </div>
+      </div>
+      <div class="tile photo">
+        <img id="ba-before" src="img/entrance-before.jpg" alt="시공 전, 부속을 떼어낸 흰색 현관문" width="900" height="1200" hidden>
+        <img id="ba-after" src="img/entrance-after.jpg" alt="시공 후, 짙은 회색으로 마감한 현관문" width="900" height="1200">
+        <span class="tag"><b id="ba-label">후</b> <span id="ba-time">2026.04.24 오후</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="head">
+      <div>
+        <p class="mono">2026</p>
+        <h2>최근 작업</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="작업 분류">
+        <button type="button" data-cat="all" aria-pressed="true">전체<span>12</span></button>
+        <button type="button" data-cat="door" aria-pressed="false">문 · 문틀<span>5</span></button>
+        <button type="button" data-cat="kitchen" aria-pressed="false">주방 · 수납<span>2</span></button>
+        <button type="button" data-cat="wall" aria-pressed="false">벽면<span>3</span></button>
+        <button type="button" data-cat="shop" aria-pressed="false">상업 공간<span>2</span></button>
+      </div>
+    </div>
+    <div class="works">
+      <figure class="tile photo" data-cat="shop"><img src="img/library-1.jpg" alt="창가를 따라 길게 이어진 도서관 열람 테이블" loading="lazy" width="900" height="1200"><figcaption class="tag">도서관 열람석 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-gray.jpg" alt="회색으로 마감한 방문 두 짝과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 · 문틀 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="kitchen"><img src="img/cabinet-1.jpg" alt="창 아래 짙은 회색 수납장" loading="lazy" width="900" height="1200"><figcaption class="tag">창가 수납장 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="wall"><img src="img/wall-1.jpg" alt="간접 조명이 있는 밝은 회색 거실 벽면" loading="lazy" width="900" height="1200"><figcaption class="tag">거실 벽면 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-wood.jpg" alt="우드 톤 방문과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-blue.jpg" alt="유리창이 있는 파란색 문" loading="lazy" width="900" height="1200"><figcaption class="tag">유리 방문 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="kitchen"><img src="img/hero-kitchen.jpg" alt="흰색 상부장과 하부장, 우드 상판 수납장과 선반이 있는 주방" loading="lazy" width="1600" height="800"><figcaption class="tag">주방 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="shop"><img src="img/library-2.jpg" alt="창가 열람 테이블과 의자가 놓인 도서관" loading="lazy" width="900" height="1200"><figcaption class="tag">도서관 창가 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="wall"><img src="img/living-1.jpg" alt="TV가 걸린 밝은 아트월과 간접 조명 천장이 있는 거실" loading="lazy" width="900" height="1200"><figcaption class="tag">거실 아트월 <span>2026.09</span></figcaption></figure>
+      <figure class="tile photo" data-cat="wall"><img src="img/hall-1.jpg" alt="우드 패널로 마감한 복도 벽면" loading="lazy" width="900" height="1200"><figcaption class="tag">복도 벽면 <span>2026.08</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-frame.jpg" alt="밝은 우드 톤 방문과 문틀, 걸레받이" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 · 문틀 <span>2026.06</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-arch.jpg" alt="아치형 우드 문틀과 아이보리 양개문" loading="lazy" width="900" height="1200"><figcaption class="tag">아치 양개문 <span>2026.04</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <div>
+        <p class="mono">샘플북</p>
+        <h2>올해 붙인 색</h2>
+      </div>
+    </div>
+    <ul class="swatches">
+      <li><i style="--sw:#4a4d52"></i><div><b>다크 그레이</b><span class="mono">현관문 · 04</span></div></li>
+      <li><i style="--sw:#e6e0d0"></i><div><b>아이보리</b><span class="mono">양개문 · 04</span></div></li>
+      <li><i style="--sw:#c9a46f"></i><div><b>오크 우드</b><span class="mono">방문 · 06</span></div></li>
+      <li><i style="--sw:#c8cbca"></i><div><b>라이트 그레이</b><span class="mono">거실 벽면 · 10</span></div></li>
+      <li><i style="--sw:#2f4e9e"></i><div><b>블루</b><span class="mono">유리 방문 · 10</span></div></li>
+      <li><i style="--sw:#6c7075"></i><div><b>그레이</b><span class="mono">방문 · 10</span></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="duo">
+      <div class="tile">
+        <p class="mono">시공 범위</p>
+        <h2>이런 곳에 붙입니다</h2>
+        <ul class="pills">
+          <li>방문·문틀</li><li>싱크대</li><li>붙박이장</li><li>신발장</li><li>중문</li><li>샷시·창틀</li><li>몰딩</li><li>벽면</li><li>현관문</li>
+        </ul>
+        <p class="note">표면이 단단하고 평평한 곳이면 대부분 시공할 수 있습니다. 여기에 없는 곳도 사진을 보내주시면 확인해 드립니다.</p>
+      </div>
+      <div class="tile dark">
+        <p class="mono">시공 지역</p>
+        <h2>대구 · 경북</h2>
+        <ul class="pills">
+          <li>대구</li><li>경산</li><li>구미</li><li>영천</li><li>청도</li><li>포항</li><li>김천</li>
+        </ul>
+        <p class="note">그 밖의 지역은 현장을 보고 상의드립니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="head"><div><p class="mono">진행</p><h2>사진 한 장에서 시작합니다</h2></div></div>
+    <ol class="four">
+      <li class="tile"><h3>사진 상담</h3><span>바꾸고 싶은 곳의 사진을 보내주세요.</span></li>
+      <li class="tile"><h3>현장 확인 · 견적</h3><span>표면 상태를 보고 범위와 금액을 안내합니다.</span></li>
+      <li class="tile"><h3>필름 · 일정 확정</h3><span>색상과 무늬를 고르고 날짜를 잡습니다.</span></li>
+      <li class="tile"><h3>시공 · 마감 확인</h3><span>시공 후 마감을 함께 확인합니다.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="head"><div><p class="mono">원칙</p><h2>붙이기 전에 먼저 봅니다</h2></div></div>
+    <div class="three">
+      <div class="tile"><h3>현장에서 쌓아온 기술력</h3><p>모서리, 몰딩의 굴곡, 손잡이 둘레. 티가 나기 쉬운 곳의 마감에 가장 오래 머뭅니다.</p></div>
+      <div class="tile"><h3>무조건 시공보다 정확한 판단</h3><p>필름이 맞지 않는 표면이면 시공 전에 먼저 말씀드립니다. 맞는 방법을 함께 찾습니다.</p></div>
+      <div class="tile"><h3>대구·경북 현장 맞춤 시공</h3><p>현장을 직접 보고, 그 집의 상태와 쓰임에 맞춰 시공합니다.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="halves">
+      <div class="tile">
+        <h3>이런 곳은 먼저 말씀드립니다</h3>
+        <ul class="plain">
+          <li>물을 먹어 부풀었거나 삭은 표면</li>
+          <li>기존 필름이나 칠이 넓게 들뜬 곳</li>
+          <li>열과 습기가 계속 직접 닿는 자리</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>자주 묻는 질문</h3>
+        <details>
+          <summary>살고 있는 집에서도 시공할 수 있나요?</summary>
+          <p>네. 철거가 없어 살면서도 시공할 수 있습니다. 시공하는 곳 주변의 짐만 미리 옮겨주시면 됩니다.</p>
+        </details>
+        <details>
+          <summary>견적은 어떻게 받나요?</summary>
+          <p>시공할 곳의 사진과 대략의 크기를 보내주시면 예상 견적을 안내합니다. 정확한 금액은 현장을 확인한 뒤 알려드립니다.</p>
+        </details>
+        <details>
+          <summary>시공은 얼마나 걸리나요?</summary>
+          <p>시공 범위에 따라 다릅니다. 사진을 보고 예상 일정을 함께 알려드립니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="inquiry">
+    <div class="head"><div><p class="mono">상담 신청</p><h2>바꾸고 싶은 곳을 알려주세요</h2></div></div>
+    <div class="inquiry">
+      <form class="tile" id="inquiry-form">
+        <fieldset>
+          <legend>시공할 곳</legend>
+          <div class="chips">
+            <label><input type="checkbox" id="part-door" value="방문·문틀">방문·문틀</label>
+            <label><input type="checkbox" id="part-kitchen" value="싱크대·주방">싱크대·주방</label>
+            <label><input type="checkbox" id="part-closet" value="붙박이장·신발장">붙박이장·신발장</label>
+            <label><input type="checkbox" id="part-middoor" value="중문">중문</label>
+            <label><input type="checkbox" id="part-sash" value="샷시·창틀">샷시·창틀</label>
+            <label><input type="checkbox" id="part-molding" value="몰딩·걸레받이">몰딩·걸레받이</label>
+            <label><input type="checkbox" id="part-wall" value="벽면·아트월">벽면·아트월</label>
+            <label><input type="checkbox" id="part-entrance" value="현관문">현관문</label>
+          </div>
+        </fieldset>
+        <div class="row">
+          <div class="field">
+            <label for="space-type">공간</label>
+            <select id="space-type">
+              <option>아파트</option>
+              <option>빌라·주택</option>
+              <option>상가·사무실</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="space-size">평수</label>
+            <input type="text" id="space-size" inputmode="numeric" placeholder="예: 32">
+          </div>
+        </div>
+        <div class="field">
+          <label for="space-area">지역</label>
+          <input type="text" id="space-area" placeholder="예: 대구 수성구">
+        </div>
+      </form>
+
+      <div class="tile dark note">
+        <p class="mono">고르신 내용으로 만든 문의 글</p>
+        <pre id="inquiry-text" aria-live="polite"></pre>
+        <div class="buttons">
+          <button type="button" class="btn" id="copy-inquiry">문의 내용 복사</button>
+          <button type="button" class="btn ghost" data-copy="phone-address" data-done="전화번호를 복사했습니다.">전화번호 복사</button>
+        </div>
+        <p id="copy-status" role="status">복사한 글을 사진과 함께 문자나 인스타그램 메시지로 보내주세요.</p>
+        <div class="to">
+          <p><span class="mono">문자 · 전화</span><b id="phone-address" class="num">010-7111-1126</b></p>
+          <p><span class="mono">이메일</span><b id="mail-address">capslove83@gmail.com</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="head"><div><p class="mono">바로 연결</p><h2>편한 곳으로 연락 주세요</h2></div></div>
+    <ul class="links">
+      <li class="big">
+        <a class="tile dark" href="tel:01071111126">
+          <span class="mono">전화 · 상담 08:00 – 20:00</span>
+          <span class="v num">010-7111-1126</span>
+          <span class="go">전화 걸기 ↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="tile" href="sms:01071111126">
+          <span class="mono">문자</span>
+          <span class="v">사진과 함께 보내기</span>
+          <span class="go">문자 쓰기 ↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="tile" href="https://www.instagram.com/stickto_film/" target="_blank" rel="noopener noreferrer">
+          <span class="mono">인스타그램</span>
+          <span class="v">@StickTo_film</span>
+          <span class="go">열기 ↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="tile" href="https://www.threads.net/@stickto_film" target="_blank" rel="noopener noreferrer">
+          <span class="mono">스레드</span>
+          <span class="v">@StickTo_film</span>
+          <span class="go">열기 ↗</span>
+        </a>
+      </li>
+      <li>
+        <div class="tile static">
+          <span class="mono">카카오톡 채널</span>
+          <span class="v" id="kakao-name">착붙인테리어필름</span>
+          <button type="button" class="go" data-copy="kakao-name" data-done="복사했습니다">이름 복사</button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>착붙인테리어필름 · StickTo_film · 조학래</span>
+    <span class="num">010-7111-1126 · 대구 · 경북</span>
+  </div>
+</footer>
+
+<nav class="dock" aria-label="빠른 연락">
+  <a href="tel:01071111126">전화</a>
+  <a href="sms:01071111126">문자</a>
+  <a class="main" href="#inquiry">상담 신청</a>
+</nav>
+
+<script>
+  (function () {
+    // 시공 전 · 후 전환
+    var before = document.getElementById('ba-before');
+    var after = document.getElementById('ba-after');
+    var bBtn = document.getElementById('show-before');
+    var aBtn = document.getElementById('show-after');
+    function show(isAfter) {
+      before.hidden = isAfter;
+      after.hidden = !isAfter;
+      bBtn.setAttribute('aria-pressed', isAfter ? 'false' : 'true');
+      aBtn.setAttribute('aria-pressed', isAfter ? 'true' : 'false');
+      document.getElementById('ba-label').textContent = isAfter ? '후' : '전';
+      document.getElementById('ba-time').textContent = isAfter ? '2026.04.24 오후' : '2026.04.24 오전';
+    }
+    bBtn.addEventListener('click', function () { show(false); });
+    aBtn.addEventListener('click', function () { show(true); });
+
+    // 작업 분류
+    var figures = document.querySelectorAll('.works figure');
+    var buttons = document.querySelectorAll('#filters button');
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener('click', function () {
+        var cat = btn.getAttribute('data-cat');
+        Array.prototype.forEach.call(buttons, function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        Array.prototype.forEach.call(figures, function (fig) {
+          fig.hidden = cat !== 'all' && fig.getAttribute('data-cat') !== cat;
+        });
+      });
+    });
+
+    // 문의 글 만들기
+    var form = document.getElementById('inquiry-form');
+    var out = document.getElementById('inquiry-text');
+    var status = document.getElementById('copy-status');
+    function build() {
+      var parts = Array.prototype.map.call(
+        form.querySelectorAll('input[type="checkbox"]:checked'),
+        function (el) { return el.value; }
+      );
+      var size = document.getElementById('space-size').value.trim();
+      var area = document.getElementById('space-area').value.trim();
+      out.textContent = [
+        '인테리어필름 견적 문의드립니다.',
+        '',
+        '시공할 곳: ' + (parts.length ? parts.join(', ') : '(왼쪽에서 골라주세요)'),
+        '공간: ' + document.getElementById('space-type').value + (size ? ' ' + size + '평' : ''),
+        '지역: ' + (area || '(적어주세요)'),
+        '',
+        '시공할 곳의 사진을 함께 보냅니다.'
+      ].join('\n');
+    }
+
+    // 복사가 막힌 환경에서는 글자를 선택해 두어 직접 복사할 수 있게 한다
+    function copy(el, done, say) {
+      function fallback() {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        say('자동 복사가 막혀 있어 글자를 선택해 두었습니다. 길게 눌러 복사해 주세요.', false);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.textContent).then(function () { say(done, true); }, fallback);
+      } else {
+        fallback();
+      }
+    }
+
+    form.addEventListener('input', build);
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    document.getElementById('copy-inquiry').addEventListener('click', function () {
+      copy(out, '문의 내용을 복사했습니다.', function (t) { status.textContent = t; });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (btn) {
+      var label = btn.textContent;
+      btn.addEventListener('click', function () {
+        copy(document.getElementById(btn.getAttribute('data-copy')), btn.getAttribute('data-done'), function (t, ok) {
+          if (btn.closest('.note')) { status.textContent = t; }
+          else { btn.textContent = ok ? '복사했습니다' : '선택해 두었습니다'; setTimeout(function () { btn.textContent = label; }, 2400); }
+        });
+      });
+    });
+    build();
+  })();
+</script>
