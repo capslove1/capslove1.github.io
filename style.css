@@ -47,6 +47,11 @@ section { padding-block: 40px; }
 }
 .sites button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 
+/* 시공 전 · 후: 휴대폰에서도 사진 아래 표시에 현장 이름(현관문은 날짜)을 보여 준다 */
+@media (max-width: 420px) {
+  .ba .tag span { display: inline; }
+}
+
 /* 바로 연결: 이메일 주소가 한 줄에 들어가도록 큰 글씨만 조금 작게 (컴퓨터 화면) */
 @media (min-width: 901px) {
   .links a[href^="mailto:"] .v { font-size: clamp(1rem, 1.6vw, 1.2rem); }
