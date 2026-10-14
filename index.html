@@ -60,6 +60,7 @@
   }
   a { color: inherit; text-decoration: none; }
   img { display: block; }
+  [hidden] { display: none !important; }
   :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
   .wrap { max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
@@ -208,6 +209,24 @@
 
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 26px 40px; font-size: 0.88rem; color: var(--muted); }
 
+  /* 사진 크게 보기 */
+  .zoomable { cursor: zoom-in; }
+  .lb {
+    position: fixed; inset: 0; z-index: 20;
+    display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: rgba(8, 10, 12, 0.96); color: #f3f5f6;
+    touch-action: pinch-zoom;
+  }
+  .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; }
+  .lb-bar button { font: inherit; font-weight: 500; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.4); background: transparent; color: inherit; cursor: pointer; }
+  .lb-stage { position: relative; min-height: 0; overflow: hidden; }
+  .lb-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+  .lb-nav { position: absolute; top: 50%; z-index: 1; width: 48px; height: 48px; margin-top: -24px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.18); color: #fff; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+  .lb-nav.prev { left: 10px; }
+  .lb-nav.next { right: 10px; }
+  .lb-cap { min-height: 3.2em; padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px)); text-align: center; font-size: 0.95rem; }
+
   .dock { display: none; }
   @media (max-width: 900px) {
     .top nav a.link, .top .tel { display: none; }
@@ -265,7 +284,7 @@
       </div>
     </div>
     <div class="tile photo shot">
-      <img src="img/kitchen-1.jpg" alt="흰색 싱크대와 우드 상판 수납장이 있는 주방" width="900" height="1200">
+      <img src="img/kitchen-gray-wide.jpg" alt="회색으로 마감한 상부장과 하부장, 레일 조명이 있는 주방" width="1600" height="1430">
       <span class="tag">주방 <span>2026.10</span></span>
     </div>
     <div class="tile fact"><span class="mono">지역</span><b>대구 · 경북</b></div>
@@ -301,11 +320,11 @@
         <h2>최근 작업</h2>
       </div>
       <div class="filters" id="filters" role="group" aria-label="작업 분류">
-        <button type="button" data-cat="all" aria-pressed="true">전체<span>12</span></button>
-        <button type="button" data-cat="door" aria-pressed="false">문 · 문틀<span>5</span></button>
-        <button type="button" data-cat="kitchen" aria-pressed="false">주방 · 수납<span>2</span></button>
-        <button type="button" data-cat="wall" aria-pressed="false">벽면<span>3</span></button>
-        <button type="button" data-cat="shop" aria-pressed="false">상업 공간<span>2</span></button>
+        <button type="button" data-cat="all" aria-pressed="true">전체<span>18</span></button>
+        <button type="button" data-cat="door" aria-pressed="false">문 · 문틀<span>7</span></button>
+        <button type="button" data-cat="kitchen" aria-pressed="false">주방 · 수납<span>3</span></button>
+        <button type="button" data-cat="wall" aria-pressed="false">벽면<span>4</span></button>
+        <button type="button" data-cat="shop" aria-pressed="false">상업 공간<span>4</span></button>
       </div>
     </div>
     <div class="works">
@@ -313,12 +332,18 @@
       <figure class="tile photo" data-cat="door"><img src="img/door-gray.jpg" alt="회색으로 마감한 방문 두 짝과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 · 문틀 <span>2026.10</span></figcaption></figure>
       <figure class="tile photo" data-cat="kitchen"><img src="img/cabinet-1.jpg" alt="창 아래 짙은 회색 수납장" loading="lazy" width="900" height="1200"><figcaption class="tag">창가 수납장 <span>2026.10</span></figcaption></figure>
       <figure class="tile photo" data-cat="wall"><img src="img/wall-1.jpg" alt="간접 조명이 있는 밝은 회색 거실 벽면" loading="lazy" width="900" height="1200"><figcaption class="tag">거실 벽면 <span>2026.10</span></figcaption></figure>
-      <figure class="tile photo" data-cat="door"><img src="img/door-wood.jpg" alt="우드 톤 방문과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 <span>2026.10</span></figcaption></figure>
-      <figure class="tile photo" data-cat="door"><img src="img/door-blue.jpg" alt="유리창이 있는 파란색 문" loading="lazy" width="900" height="1200"><figcaption class="tag">유리 방문 <span>2026.10</span></figcaption></figure>
-      <figure class="tile photo" data-cat="kitchen"><img src="img/hero-kitchen.jpg" alt="흰색 상부장과 하부장, 우드 상판 수납장과 선반이 있는 주방" loading="lazy" width="1600" height="800"><figcaption class="tag">주방 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="kitchen"><img src="img/kitchen-gray.jpg" alt="회색으로 마감한 주방 상부장과 하부장, 아일랜드 수납장" loading="lazy" width="900" height="1200"><figcaption class="tag">주방 <span>2026.10</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-glass-gray.jpg" alt="유리창이 있는 회색 문과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">유리 방문 <span>2026.10</span></figcaption></figure>
       <figure class="tile photo" data-cat="shop"><img src="img/library-2.jpg" alt="창가 열람 테이블과 의자가 놓인 도서관" loading="lazy" width="900" height="1200"><figcaption class="tag">도서관 창가 <span>2026.10</span></figcaption></figure>
       <figure class="tile photo" data-cat="wall"><img src="img/living-1.jpg" alt="TV가 걸린 밝은 아트월과 간접 조명 천장이 있는 거실" loading="lazy" width="900" height="1200"><figcaption class="tag">거실 아트월 <span>2026.09</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-double-white.jpg" alt="흰색으로 마감한 양개문과 문틀" loading="lazy" width="900" height="1200"><figcaption class="tag">흰색 양개문 <span>2026.09</span></figcaption></figure>
+      <figure class="tile photo" data-cat="shop"><img src="img/ceiling-frame.jpg" alt="밝은 회색으로 마감한 격자 모양 천장 조명 틀" loading="lazy" width="900" height="1200"><figcaption class="tag">천장 조명 틀 <span>2026.09</span></figcaption></figure>
       <figure class="tile photo" data-cat="wall"><img src="img/hall-1.jpg" alt="우드 패널로 마감한 복도 벽면" loading="lazy" width="900" height="1200"><figcaption class="tag">복도 벽면 <span>2026.08</span></figcaption></figure>
+      <figure class="tile photo" data-cat="wall"><img src="img/hall-2.jpg" alt="양쪽 벽을 우드 패널로 마감한 긴 복도" loading="lazy" width="900" height="1200"><figcaption class="tag">복도 패널 <span>2026.08</span></figcaption></figure>
+      <figure class="tile photo" data-cat="shop"><img src="img/counter.jpg" alt="밝은 회색으로 마감한 카운터" loading="lazy" width="900" height="1200"><figcaption class="tag">카운터 <span>2026.07</span></figcaption></figure>
+      <figure class="tile photo" data-cat="kitchen"><img src="img/kitchen-wood.jpg" alt="우드 톤으로 마감한 주방 하부장" loading="lazy" width="900" height="1200"><figcaption class="tag">주방 하부장 <span>2026.06</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/door-sliding.jpg" alt="우드 톤 문틀과 무늬 유리가 있는 중문" loading="lazy" width="900" height="1200"><figcaption class="tag">중문 <span>2026.06</span></figcaption></figure>
+      <figure class="tile photo" data-cat="door"><img src="img/window-frame.jpg" alt="우드 톤으로 마감한 거실 창틀" loading="lazy" width="900" height="1200"><figcaption class="tag">창틀 <span>2026.06</span></figcaption></figure>
       <figure class="tile photo" data-cat="door"><img src="img/door-frame.jpg" alt="밝은 우드 톤 방문과 문틀, 걸레받이" loading="lazy" width="900" height="1200"><figcaption class="tag">방문 · 문틀 <span>2026.06</span></figcaption></figure>
       <figure class="tile photo" data-cat="door"><img src="img/door-arch.jpg" alt="아치형 우드 문틀과 아이보리 양개문" loading="lazy" width="900" height="1200"><figcaption class="tag">아치 양개문 <span>2026.04</span></figcaption></figure>
     </div>
@@ -336,7 +361,7 @@
       <li><i style="--sw:#e6e0d0"></i><div><b>아이보리</b><span class="mono">양개문 · 04</span></div></li>
       <li><i style="--sw:#c9a46f"></i><div><b>오크 우드</b><span class="mono">방문 · 06</span></div></li>
       <li><i style="--sw:#c8cbca"></i><div><b>라이트 그레이</b><span class="mono">거실 벽면 · 10</span></div></li>
-      <li><i style="--sw:#2f4e9e"></i><div><b>블루</b><span class="mono">유리 방문 · 10</span></div></li>
+      <li><i style="--sw:#f1f1ee"></i><div><b>화이트</b><span class="mono">양개문 · 09</span></div></li>
       <li><i style="--sw:#6c7075"></i><div><b>그레이</b><span class="mono">방문 · 10</span></div></li>
     </ul>
   </section>
@@ -538,6 +563,19 @@
   <a class="main" href="#inquiry">상담 신청</a>
 </nav>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="사진 크게 보기" hidden>
+  <div class="lb-bar">
+    <span class="num" id="lb-count"></span>
+    <button type="button" id="lb-close">닫기 ✕</button>
+  </div>
+  <div class="lb-stage" id="lb-stage">
+    <button type="button" class="lb-nav prev" id="lb-prev" aria-label="이전 사진">‹</button>
+    <img id="lb-img" alt="">
+    <button type="button" class="lb-nav next" id="lb-next" aria-label="다음 사진">›</button>
+  </div>
+  <p class="lb-cap" id="lb-cap"></p>
+</div>
+
 <script>
   (function () {
     // 시공 전 · 후 전환
@@ -623,5 +661,128 @@
       });
     });
     build();
+
+    // 사진 크게 보기: 누르면 화면 가득 열리고, 옆으로 밀거나 화살표로 넘긴다
+    var lb = document.getElementById('lb');
+    var lbImg = document.getElementById('lb-img');
+    var lbCap = document.getElementById('lb-cap');
+    var lbCount = document.getElementById('lb-count');
+    var lbPrev = document.getElementById('lb-prev');
+    var lbNext = document.getElementById('lb-next');
+    var lbClose = document.getElementById('lb-close');
+    var lbStage = document.getElementById('lb-stage');
+    var lbItems = [];
+    var lbAt = 0;
+    var lbFrom = null;
+
+    function clean(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+    function lbRender() {
+      var it = lbItems[lbAt];
+      lbImg.style.transform = '';
+      lbImg.src = it.src;
+      lbImg.alt = it.alt;
+      lbCap.textContent = it.cap;
+      var many = lbItems.length > 1;
+      lbCount.textContent = many ? (lbAt + 1) + ' / ' + lbItems.length : '';
+      lbPrev.hidden = !many;
+      lbNext.hidden = !many;
+    }
+    function lbMove(step) {
+      if (lbItems.length < 2) { lbImg.style.transform = ''; return; }
+      lbAt = (lbAt + step + lbItems.length) % lbItems.length;
+      lbRender();
+    }
+    function lbShow(items, at, from) {
+      lbItems = items;
+      lbAt = at;
+      lbFrom = from;
+      lbRender();
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+      // 휴대폰의 뒤로 가기 버튼으로도 닫히게 한다
+      try { history.pushState({ lb: true }, ''); } catch (e) {}
+    }
+    function lbHide() {
+      if (lb.hidden) { return; }
+      lb.hidden = true;
+      document.body.style.overflow = '';
+      lbImg.removeAttribute('src');
+      if (lbFrom) { lbFrom.focus({ preventScroll: true }); }
+    }
+    function lbDismiss() {
+      if (history.state && history.state.lb) { history.back(); } else { lbHide(); }
+    }
+    window.addEventListener('popstate', lbHide);
+    lbClose.addEventListener('click', lbDismiss);
+    lbPrev.addEventListener('click', function () { lbMove(-1); });
+    lbNext.addEventListener('click', function () { lbMove(1); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) { return; }
+      if (e.key === 'Escape') { lbDismiss(); }
+      else if (e.key === 'ArrowLeft') { lbMove(-1); }
+      else if (e.key === 'ArrowRight') { lbMove(1); }
+    });
+
+    var touchX = null;
+    var touchY = 0;
+    lbStage.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { touchX = null; lbImg.style.transform = ''; return; }
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+    lbStage.addEventListener('touchmove', function (e) {
+      if (touchX === null || e.touches.length !== 1) { return; }
+      lbImg.style.transform = 'translateX(' + (e.touches[0].clientX - touchX) + 'px)';
+    }, { passive: true });
+    lbStage.addEventListener('touchend', function (e) {
+      if (touchX === null) { return; }
+      var dx = e.changedTouches[0].clientX - touchX;
+      var dy = e.changedTouches[0].clientY - touchY;
+      touchX = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { lbMove(dx < 0 ? 1 : -1); }
+      else { lbImg.style.transform = ''; }
+    });
+
+    function zoomable(el, label, opener) {
+      el.classList.add('zoomable');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', label + ' 크게 보기');
+      el.addEventListener('click', opener);
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opener(); }
+      });
+    }
+    function entry(img, cap) { return { src: img.getAttribute('src'), alt: img.alt, cap: cap }; }
+
+    // 최근 작업: 지금 보이는 분류 안에서 넘긴다
+    Array.prototype.forEach.call(figures, function (fig) {
+      zoomable(fig, clean(fig.querySelector('figcaption')), function () {
+        var shown = Array.prototype.filter.call(figures, function (f) { return !f.hidden; });
+        lbShow(shown.map(function (f) {
+          return entry(f.querySelector('img'), clean(f.querySelector('figcaption')));
+        }), shown.indexOf(fig), fig);
+      });
+    });
+
+    // 첫 화면 사진
+    var heroShot = document.querySelector('.hero .shot');
+    if (heroShot) {
+      zoomable(heroShot, clean(heroShot.querySelector('.tag')), function () {
+        lbShow([entry(heroShot.querySelector('img'), clean(heroShot.querySelector('.tag')))], 0, heroShot);
+      });
+    }
+
+    // 시공 전 · 후: 두 장을 넘겨 가며 비교한다
+    var baShot = document.querySelector('.ba .tile.photo');
+    if (baShot) {
+      zoomable(baShot, '시공 전 · 후 사진', function () {
+        lbShow([
+          entry(before, '전 · 2026.04.24 오전'),
+          entry(after, '후 · 2026.04.24 오후')
+        ], before.hidden ? 1 : 0, baShot);
+      });
+    }
   })();
 </script>
