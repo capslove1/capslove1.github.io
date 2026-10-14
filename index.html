@@ -298,14 +298,14 @@
         <div>
           <p class="mono">시공 전 · 후</p>
           <div class="sites" role="group" aria-label="시공 현장 고르기">
-            <button type="button" data-site="0" aria-pressed="true">현관문</button>
-            <button type="button" data-site="1" aria-pressed="false">거실 아트월</button>
-            <button type="button" data-site="2" aria-pressed="false">거실 벤치장</button>
-            <button type="button" data-site="3" aria-pressed="false">주방</button>
-            <button type="button" data-site="4" aria-pressed="false">상가 매장</button>
+            <button type="button" data-site="0" aria-pressed="true">거실 아트월</button>
+            <button type="button" data-site="1" aria-pressed="false">거실 벤치장</button>
+            <button type="button" data-site="2" aria-pressed="false">주방</button>
+            <button type="button" data-site="3" aria-pressed="false">상가 매장</button>
+            <button type="button" data-site="4" aria-pressed="false">현관문</button>
           </div>
-          <h2 id="ba-title">같은 문,<br>같은 날.</h2>
-          <p id="ba-desc">문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.</p>
+          <h2 id="ba-title">같은 벽,<br>다른 거실.</h2>
+          <p id="ba-desc">목공 마감 위에 필름을 입혀 아트월과 우드 포인트를 완성했습니다.</p>
         </div>
         <div class="seg" role="group" aria-label="시공 전후 보기">
           <button type="button" id="show-before" aria-pressed="false">전</button>
@@ -313,9 +313,9 @@
         </div>
       </div>
       <div class="tile photo">
-        <img id="ba-before" src="img/entrance-before.jpg" alt="시공 전, 부속을 떼어낸 흰색 현관문" width="900" height="1200" hidden>
-        <img id="ba-after" src="img/entrance-after.jpg" alt="시공 후, 짙은 회색으로 마감한 현관문" width="900" height="1200">
-        <span class="tag"><b id="ba-label">후</b> <span id="ba-time">2026.04.24 오후</span></span>
+        <img id="ba-before" src="img/ba-living-before.jpg" alt="시공 전, 목공 마감만 된 거실 벽" width="900" height="1125" hidden>
+        <img id="ba-after" src="img/ba-living-after.jpg" alt="시공 후, 필름으로 완성한 거실 아트월과 우드 포인트" width="900" height="1125">
+        <span class="tag"><b id="ba-label">후</b> <span id="ba-time">거실 아트월</span></span>
       </div>
     </div>
   </section>
@@ -603,10 +603,6 @@
     var aBtn = document.getElementById('show-after');
     // 현장별 사진과 문구 (현관문만 날짜를 쓰고, 나머지는 현장 이름을 쓴다)
     var sites = [
-      { name: '현관문', title: '같은 문,<br>같은 날.',
-        desc: '문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.',
-        before: ['img/entrance-before.jpg', '시공 전, 부속을 떼어낸 흰색 현관문', '2026.04.24 오전'],
-        after: ['img/entrance-after.jpg', '시공 후, 짙은 회색으로 마감한 현관문', '2026.04.24 오후'], w: 900, h: 1200 },
       { name: '거실 아트월', title: '같은 벽,<br>다른 거실.',
         desc: '목공 마감 위에 필름을 입혀 아트월과 우드 포인트를 완성했습니다.',
         before: ['img/ba-living-before.jpg', '시공 전, 목공 마감만 된 거실 벽'],
@@ -622,7 +618,11 @@
       { name: '상가 매장', title: '공사 현장에서 매장으로.',
         desc: 'MDF 그대로였던 매장을 화이트 필름으로 깔끔하게 마감했습니다.',
         before: ['img/ba-shop-before.jpg', '시공 전, MDF 그대로인 상가 매장'],
-        after: ['img/ba-shop-after.jpg', '시공 후, 화이트 필름으로 마감한 상가 매장'], w: 900, h: 1125 }
+        after: ['img/ba-shop-after.jpg', '시공 후, 화이트 필름으로 마감한 상가 매장'], w: 900, h: 1125 },
+      { name: '현관문', title: '같은 문,<br>같은 날.',
+        desc: '문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.',
+        before: ['img/entrance-before.jpg', '시공 전, 부속을 떼어낸 흰색 현관문', '2026.04.24 오전'],
+        after: ['img/entrance-after.jpg', '시공 후, 짙은 회색으로 마감한 현관문', '2026.04.24 오후'], w: 900, h: 1200 }
     ];
     var site = sites[0];
     var siteBtns = document.querySelectorAll('.sites button');
