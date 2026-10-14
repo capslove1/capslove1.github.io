@@ -37,6 +37,16 @@ section { padding-block: 40px; }
   :root { --gap: 14px; }
 }
 
+/* 시공 전 · 후: 현장 고르기 버튼 줄 (전 / 후 버튼보다 작게, 좁으면 다음 줄로) */
+.sites { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 20px; }
+.sites button {
+  font: inherit; font-size: 0.85rem; font-weight: 500;
+  min-height: 36px; padding: 0 14px;
+  border: 0; border-radius: 999px;
+  background: var(--bg); color: var(--muted); cursor: pointer;
+}
+.sites button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
 /* 바로 연결: 이메일 주소가 한 줄에 들어가도록 큰 글씨만 조금 작게 (컴퓨터 화면) */
 @media (min-width: 901px) {
   .links a[href^="mailto:"] .v { font-size: clamp(1rem, 1.6vw, 1.2rem); }

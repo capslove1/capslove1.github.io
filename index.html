@@ -297,8 +297,15 @@
       <div class="tile text">
         <div>
           <p class="mono">시공 전 · 후</p>
-          <h2>같은 문,<br>같은 날.</h2>
-          <p>문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.</p>
+          <div class="sites" role="group" aria-label="시공 현장 고르기">
+            <button type="button" data-site="0" aria-pressed="true">현관문</button>
+            <button type="button" data-site="1" aria-pressed="false">거실 아트월</button>
+            <button type="button" data-site="2" aria-pressed="false">거실 벤치장</button>
+            <button type="button" data-site="3" aria-pressed="false">주방</button>
+            <button type="button" data-site="4" aria-pressed="false">상가 매장</button>
+          </div>
+          <h2 id="ba-title">같은 문,<br>같은 날.</h2>
+          <p id="ba-desc">문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.</p>
         </div>
         <div class="seg" role="group" aria-label="시공 전후 보기">
           <button type="button" id="show-before" aria-pressed="false">전</button>
@@ -594,16 +601,61 @@
     var after = document.getElementById('ba-after');
     var bBtn = document.getElementById('show-before');
     var aBtn = document.getElementById('show-after');
+    // 현장별 사진과 문구 (현관문만 날짜를 쓰고, 나머지는 현장 이름을 쓴다)
+    var sites = [
+      { name: '현관문', title: '같은 문,<br>같은 날.',
+        desc: '문을 바꾸지 않았습니다. 오전에 찍은 문과 오후에 찍은 문입니다. 버튼을 눌러 비교해 보세요.',
+        before: ['img/entrance-before.jpg', '시공 전, 부속을 떼어낸 흰색 현관문', '2026.04.24 오전'],
+        after: ['img/entrance-after.jpg', '시공 후, 짙은 회색으로 마감한 현관문', '2026.04.24 오후'], w: 900, h: 1200 },
+      { name: '거실 아트월', title: '같은 벽,<br>다른 거실.',
+        desc: '목공 마감 위에 필름을 입혀 아트월과 우드 포인트를 완성했습니다.',
+        before: ['img/ba-living-before.jpg', '시공 전, 목공 마감만 된 거실 벽'],
+        after: ['img/ba-living-after.jpg', '시공 후, 필름으로 완성한 거실 아트월과 우드 포인트'], w: 900, h: 1125 },
+      { name: '거실 벤치장', title: '누워서 붙인 디테일.',
+        desc: '낮은 벤치장 아래까지 손으로 맞춰 붙였습니다.',
+        before: ['img/ba-bench-before.jpg', '시공 전, 필름을 붙이기 전의 거실 벤치장'],
+        after: ['img/ba-bench-after.jpg', '시공 후, 아래까지 필름으로 마감한 거실 벤치장'], w: 900, h: 1125 },
+      { name: '주방', title: '격자 하나까지.',
+        desc: '격자 프레임과 벤치를 우드 필름으로 감싸 주방을 따뜻하게 바꿨습니다.',
+        before: ['img/ba-kitchen-before.jpg', '시공 전, 필름을 붙이기 전의 주방 격자 프레임과 벤치'],
+        after: ['img/ba-kitchen-after.jpg', '시공 후, 우드 필름으로 감싼 주방 격자 프레임과 벤치'], w: 900, h: 1125 },
+      { name: '상가 매장', title: '공사 현장에서 매장으로.',
+        desc: 'MDF 그대로였던 매장을 화이트 필름으로 깔끔하게 마감했습니다.',
+        before: ['img/ba-shop-before.jpg', '시공 전, MDF 그대로인 상가 매장'],
+        after: ['img/ba-shop-after.jpg', '시공 후, 화이트 필름으로 마감한 상가 매장'], w: 900, h: 1125 }
+    ];
+    var site = sites[0];
+    var siteBtns = document.querySelectorAll('.sites button');
+    // 사진 아래 작은 표시: 날짜가 있으면 날짜, 없으면 현장 이름
+    function baNote(isAfter) { return (isAfter ? site.after : site.before)[2] || site.name; }
     function show(isAfter) {
       before.hidden = isAfter;
       after.hidden = !isAfter;
       bBtn.setAttribute('aria-pressed', isAfter ? 'false' : 'true');
       aBtn.setAttribute('aria-pressed', isAfter ? 'true' : 'false');
       document.getElementById('ba-label').textContent = isAfter ? '후' : '전';
-      document.getElementById('ba-time').textContent = isAfter ? '2026.04.24 오후' : '2026.04.24 오전';
+      document.getElementById('ba-time').textContent = baNote(isAfter);
+    }
+    function pickSite(i) {
+      site = sites[i];
+      [[before, site.before], [after, site.after]].forEach(function (p) {
+        p[0].src = p[1][0];
+        p[0].alt = p[1][1];
+        p[0].width = site.w;
+        p[0].height = site.h;
+      });
+      document.getElementById('ba-title').innerHTML = site.title;
+      document.getElementById('ba-desc').textContent = site.desc;
+      Array.prototype.forEach.call(siteBtns, function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-site') === String(i) ? 'true' : 'false');
+      });
+      show(true);
     }
     bBtn.addEventListener('click', function () { show(false); });
     aBtn.addEventListener('click', function () { show(true); });
+    Array.prototype.forEach.call(siteBtns, function (b) {
+      b.addEventListener('click', function () { pickSite(Number(b.getAttribute('data-site'))); });
+    });
 
     // 작업 분류
     var figures = document.querySelectorAll('.works figure');
@@ -790,8 +842,8 @@
     if (baShot) {
       zoomable(baShot, '시공 전 · 후 사진', function () {
         lbShow([
-          entry(before, '전 · 2026.04.24 오전'),
-          entry(after, '후 · 2026.04.24 오후')
+          entry(before, '전 · ' + baNote(false)),
+          entry(after, '후 · ' + baNote(true))
         ], before.hidden ? 1 : 0, baShot);
       });
     }
