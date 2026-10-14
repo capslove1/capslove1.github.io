@@ -1,7 +1,8 @@
 # 착붙인테리어필름 홈페이지 규칙
 
 인테리어필름 시공 업체 '착붙인테리어필름'(대구·경북)의 홈페이지입니다.
-깃허브 저장소: capslove1/stickto-film-homepage (main 브랜치)
+깃허브 저장소: capslove1/capslove1.github.io (main 브랜치)
+홈페이지 주소: https://capslove1.github.io/
 
 ## 파일 구성
 - `index.html` — 홈페이지 본문. 기본 CSS(`<style>`)와 JavaScript(`<script>`)가 이 파일 안에 들어 있음
@@ -13,7 +14,7 @@
 - HTML, CSS, 순수 JavaScript만 사용한다. 외부 라이브러리와 프레임워크는 쓰지 않는다.
 - 글꼴은 이미 연결된 Google Fonts(Gothic A1, IBM Plex Mono)만 쓴다.
 - 디자인 수정은 `style.css`에 한다. index.html의 `<style>`은 요청이 있을 때만 고친다.
-- 이미 있는 JavaScript 기능을 지우거나 망가뜨리지 않는다: 시공 전·후 사진 전환, 작업 사진 필터, 문의 내용 복사 버튼.
+- 이미 있는 JavaScript 기능을 지우거나 망가뜨리지 않는다: 시공 전·후 사진 전환, 작업 사진 필터, 사진 크게 보기(누르면 화면 가득 열리고 옆으로 밀어 넘김), 문의 내용 복사 버튼.
 
 ## 디자인 규칙
 - 색상은 index.html `:root`의 변수를 그대로 쓴다. 새 색을 직접 적지 않는다.
