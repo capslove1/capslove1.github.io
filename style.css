@@ -56,3 +56,6 @@ section { padding-block: 40px; }
 @media (min-width: 901px) {
   .links a[href^="mailto:"] .v { font-size: clamp(1rem, 1.6vw, 1.2rem); }
 }
+
+/* <!doctype html> 을 넣은 뒤에도 칸 높이가 예전과 같도록: 혼자 한 줄을 차지하는 작은 글씨(샘플북 이름 아래, 문의 칸 "문자 · 전화"·"이메일")를 블록으로 */
+.swatches li span, .to p > span.mono { display: block; }
