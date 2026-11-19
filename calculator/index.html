@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- 문자·카톡으로 링크를 보냈을 때 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://capslove1.github.io/calculator/">
+<meta property="og:title" content="우리 집 필름 견적 계산기 | 착붙인테리어필름">
+<meta property="og:description" content="방문·싱크대·현관문·신발장 개수만 고르면 예상 비용 범위가 나와요. 무료, 가입 없음.">
+<meta property="og:image" content="https://capslove1.github.io/img/kitchen-gray-wide.jpg">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>우리 집 필름 견적 계산기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="착붙인테리어필름 | StickTo_film — 방문·싱크대·현관문 등 개수만 고르면 인테리어필름 예상 비용 범위를 보여 드려요. 무료, 가입 없음.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+<style>
+/* Layout: 한 줄 세로 흐름. 위에서 부위 고르기 → 아래 고정 결과 바 → 결과 카드와 문의 버튼 */
+:root{
+  --bg:#eceeef; --surface:#ffffff; --ink:#1b2024; --muted:#5f666d; --line:#d8dce0;
+  --brand:#2447c8; --brand-ink:#ffffff; --brand-soft:#e6ebfb; --film:#b88a5a; --warn:#9a5b12; --warn-soft:#fbf0de;
+  --kakao:#fee500; --kakao-ink:#191600;
+  --f-head:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111417; --surface:#1a1e22; --ink:#e8ebee; --muted:#9aa2aa; --line:#2c3238;
+  --brand:#8ea6ff; --brand-ink:#0d1430; --brand-soft:#1c2547; --film:#d3a877; --warn:#e9b467; --warn-soft:#33281a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111417; --surface:#1a1e22; --ink:#e8ebee; --muted:#9aa2aa; --line:#2c3238;
+  --brand:#8ea6ff; --brand-ink:#0d1430; --brand-soft:#1c2547; --film:#d3a877; --warn:#e9b467; --warn-soft:#33281a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);word-break:keep-all;overflow-wrap:anywhere;font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header{padding-block:22px 4px;display:flex;flex-direction:column;gap:6px}
+.brand{font-size:12.5px;letter-spacing:.06em;color:var(--brand);font-weight:600}
+h1{font-family:var(--f-head);font-weight:800;font-size:26px;line-height:1.25;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;background:var(--brand-soft);color:var(--brand);padding:3px 9px;border-radius:999px;font-weight:600}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px}
+h2{font-family:var(--f-head);font-size:17px;margin:0;display:flex;align-items:baseline;gap:8px}
+h2 small{font-family:var(--f-body);font-weight:400;font-size:12.5px;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.row .lbl{min-width:0;display:flex;flex-direction:column}
+.row .lbl b{font-weight:600}
+.row .lbl span{font-size:12.5px;color:var(--muted)}
+.step{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.step button{width:40px;height:40px;border:0;background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
+.step button:active{background:var(--brand-soft)}
+.step input{width:42px;height:40px;border:0;border-inline:1px solid var(--line);text-align:center;font:600 16px var(--f-body);background:transparent;color:var(--ink);font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.step input::-webkit-outer-spin-button,.step input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+button:focus-visible,input:focus-visible,a:focus-visible,label:focus-within{outline:2px solid var(--brand);outline-offset:2px}
+.shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.shape{position:relative;border:1.5px solid var(--line);border-radius:10px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:12px;text-align:center;line-height:1.25}
+.shape input{position:absolute;opacity:0;pointer-events:none}
+.shape svg{width:34px;height:52px}
+.shape:has(input:checked){border-color:var(--brand);background:var(--brand-soft);color:var(--brand);font-weight:600}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg label{border:1.5px solid var(--line);border-radius:10px;padding:9px 6px;text-align:center;font-size:13.5px;cursor:pointer;display:flex;flex-direction:column;line-height:1.3}
+.seg label small{font-size:11.5px;color:var(--muted)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){border-color:var(--brand);background:var(--brand-soft);color:var(--brand);font-weight:600}
+.checks{display:flex;flex-direction:column;gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}
+.addwin{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.addwin button{border:1.5px dashed var(--brand);background:transparent;color:var(--brand);border-radius:10px;padding:10px 8px;font:600 13.5px var(--f-body);cursor:pointer;line-height:1.3}
+.addwin button small{display:block;font-weight:400;font-size:11.5px;color:var(--muted)}
+.win{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.win .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.win .top b{font-size:15px}
+.win .del{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
+.win .size{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13.5px}
+.win .size input{width:78px;height:38px;border:1px solid var(--line);border-radius:8px;text-align:center;font:600 15px var(--f-body);background:transparent;color:var(--ink);font-variant-numeric:tabular-nums}
+.win .meta{font-size:12.5px;color:var(--muted)}
+.check input{width:20px;height:20px;accent-color:var(--brand);flex:none;margin-top:1px}
+.divider{height:1px;background:var(--line)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.presets{display:flex;flex-direction:column;gap:8px}
+.presets button{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;cursor:pointer}
+.presets button b{display:block;font-size:15.5px}
+.presets button span{display:block;font-size:12.5px;color:var(--muted)}
+.presets button i{font-style:normal;flex:none;font-size:13px;font-weight:700;color:var(--brand-ink);background:var(--brand);border-radius:8px;padding:6px 10px}
+.presets button.on{border-color:var(--brand);background:var(--brand-soft)}
+.presets button.on i{background:transparent;color:var(--brand)}
+#presetMsg{font-size:14px;color:var(--brand);font-weight:600;margin:0}
+#presetMsg:empty{display:none}
+.linkbtn{align-self:flex-start;border:0;background:none;color:var(--muted);text-decoration:underline;font:inherit;font-size:13px;padding:2px 0;cursor:pointer}
+/* 결과 */
+#result{border:2px solid var(--brand)}
+.big{font-family:var(--f-head);font-weight:800;font-size:30px;line-height:1.2;font-variant-numeric:tabular-nums;color:var(--brand)}
+.big small{font-size:16px;color:var(--ink)}
+.film{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.roll{width:38px;height:22px;border-radius:4px;background:repeating-linear-gradient(90deg,var(--film) 0 6px,color-mix(in srgb,var(--film) 75%,var(--surface)) 6px 9px);flex:none}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+td{padding:7px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+td:last-child{text-align:right;white-space:nowrap;padding-left:10px}
+.flag{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--muted);font-size:14px}
+.cta{display:flex;flex-direction:column;gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:12px;border:0;font:700 16px var(--f-body);cursor:pointer;text-decoration:none}
+.btn.kakao{background:var(--kakao);color:var(--kakao-ink)}
+.btn.line{background:transparent;border:1.5px solid var(--brand);color:var(--brand)}
+.phone{font-size:14px;text-align:center;color:var(--muted)}
+.phone b{color:var(--ink);user-select:all;font-variant-numeric:tabular-nums}
+#copied{font-size:13px;color:var(--brand);text-align:center;min-height:20px}
+#copyBox{width:100%;min-height:140px;font:13px var(--f-body);border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink)}
+ol.photos{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:2px}
+/* 아래 고정 요약 바 */
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:5}
+.bar .in{max-width:560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar .v{font-family:var(--f-head);font-weight:800;font-size:19px;font-variant-numeric:tabular-nums}
+.bar .k{font-size:11.5px;color:var(--muted)}
+.bar a{background:var(--brand);color:var(--brand-ink);border-radius:10px;padding:10px 14px;font-weight:700;text-decoration:none;font-size:14px;white-space:nowrap}
+footer{font-size:12px;color:var(--muted);text-align:center;padding-top:6px}
+@media (prefers-reduced-motion:no-preference){.big{transition:color .2s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">착붙인테리어필름 | StickTo_film</div>
+    <h1>우리 집 필름 견적 계산기</h1>
+    <p class="lead">바꾸고 싶은 곳의 개수만 고르면 예상 비용 범위가 바로 나와요. 무료이고 가입도 없어요.</p>
+    <div class="chips"><span class="chip">대구·경북</span><span class="chip">개수만 고르면 끝</span><span class="chip">실측 전 예상 범위</span></div>
+  </header>
+
+  <section class="card" aria-labelledby="h-preset">
+    <h2 id="h-preset">우리 집과 비슷한 걸 눌러 보세요</h2>
+    <p class="note" style="margin:0">누르면 개수가 자동으로 들어가고 금액이 바로 나와요. 개수는 아래에서 바꿀 수 있어요. 직접 고르실 거면 건너뛰셔도 돼요.</p>
+    <div class="presets">
+      <button type="button" data-preset="doors" data-name="방문 4세트를"><div><b>방문 전체</b><span>방 3개 + 화장실 1개 · 문과 문틀 4세트</span></div><i>넣기</i></button>
+      <button type="button" data-preset="kitchen" data-name="싱크대를"><div><b>싱크대만</b><span>30평대 싱크대 · 문·서랍 18개</span></div><i>넣기</i></button>
+      <button type="button" data-preset="entry" data-name="현관문과 신발장을"><div><b>현관문 + 신발장</b><span>현관문 안쪽 + 천장까지 신발장 문 4짝</span></div><i>넣기</i></button>
+    </div>
+    <p id="presetMsg" role="status"></p>
+    <button type="button" class="linkbtn" data-preset="reset" data-name="">모두 0으로 비우기</button>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-door">
+    <h2 id="h-door">방문 <small>아파트 방문 기준</small></h2>
+    <div class="shapes" role="radiogroup" aria-label="문 모양">
+      <label class="shape"><input type="radio" name="shape" value="flat" id="shape-flat" checked>
+        <svg viewBox="0 0 34 52" aria-hidden="true"><rect x="2" y="1" width="30" height="50" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="26" cy="27" r="1.8" fill="currentColor"/></svg>평평한 문</label>
+      <label class="shape"><input type="radio" name="shape" value="line" id="shape-line">
+        <svg viewBox="0 0 34 52" aria-hidden="true"><rect x="2" y="1" width="30" height="50" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 7v38M17 7v38" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="26" cy="27" r="1.8" fill="currentColor"/></svg>긴 줄 홈</label>
+      <label class="shape"><input type="radio" name="shape" value="square" id="shape-square">
+        <svg viewBox="0 0 34 52" aria-hidden="true"><rect x="2" y="1" width="30" height="50" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="6" width="18" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="20" width="18" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="34" width="18" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>사각 홈 여러 개</label>
+      <label class="shape"><input type="radio" name="shape" value="mold" id="shape-mold">
+        <svg viewBox="0 0 34 52" aria-hidden="true"><rect x="2" y="1" width="30" height="50" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="7" y="5" width="20" height="18" rx="1" fill="currentColor" opacity=".18" stroke="currentColor" stroke-width="2.5"/><rect x="7" y="27" width="20" height="20" rx="1" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>볼록 몰딩·유리 칸</label>
+    </div>
+    <div class="row"><div class="lbl"><b>문 + 문틀 같이</b><span>가장 많이 하는 방식</span></div><div class="step" data-for="set"></div></div>
+    <div class="row"><div class="lbl"><b>문짝만</b><span>문틀은 그대로</span></div><div class="step" data-for="door"></div></div>
+    <div class="row"><div class="lbl"><b>문틀만</b></div><div class="step" data-for="frame"></div></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-kitchen">
+    <h2 id="h-kitchen">주방</h2>
+    <div class="row"><div class="lbl"><b>싱크대 문·서랍 앞판 개수</b><span>위·아래 합쳐서. 30평대는 보통 18개 안팎</span></div><div class="step" data-for="sink"></div></div>
+    <div class="row"><div class="lbl"><b>냉장고장</b><span>냉장고 둘레 장 1세트</span></div><div class="step" data-for="fridge"></div></div>
+    <div class="row"><div class="lbl"><b>아일랜드 식탁</b><span>길이 1.8m 정도, 상판 제외</span></div><div class="step" data-for="island"></div></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-entry">
+    <h2 id="h-entry">현관·수납장</h2>
+    <div class="row"><div class="lbl"><b>현관문 (집 안쪽 면)</b></div><div class="step" data-for="entrance"></div></div>
+    <div class="row"><div class="lbl"><b>신발장 낮은형</b><span>허리 높이, 문 3짝 정도</span></div><div class="step" data-for="shoeLow"></div></div>
+    <div class="row"><div class="lbl"><b>신발장 천장형 문짝 수</b><span>바닥부터 천장까지 닿는 문</span></div><div class="step" data-for="shoeTall"></div></div>
+    <div class="row"><div class="lbl"><b>붙박이장 문짝 수</b><span>거울 문은 빼고 세어 주세요</span></div><div class="step" data-for="closet"></div></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-win">
+    <h2 id="h-win">샷시(창틀) <small>집 안쪽 면 기준</small></h2>
+    <p class="note" style="margin:0">창 위치를 누르면 30~34평 아파트 대표 크기가 들어가요. 줄자로 재신 크기가 있으면 가로·세로(mm)를 바꿔 주세요. 가로가 3m(3000mm) 이상이면 어느 방 창이든 큰 창 금액이에요.</p>
+    <div class="addwin">
+      <button type="button" data-win="lbal">+ 거실 전면 발코니창<small>4,500 × 2,200</small></button>
+      <button type="button" data-win="mbal">+ 안방 발코니창<small>3,000 × 2,200</small></button>
+      <button type="button" data-win="lin">+ 거실 내창<small>3,000 × 2,100</small></button>
+      <button type="button" data-win="min">+ 안방 내창<small>2,400 × 1,800</small></button>
+      <button type="button" data-win="r1">+ 작은방 1<small>1,800 × 1,500</small></button>
+      <button type="button" data-win="r2">+ 작은방 2<small>1,500 × 1,500</small></button>
+      <button type="button" data-win="kit">+ 주방창<small>1,500 × 1,200</small></button>
+      <button type="button" data-win="util">+ 다용도실창<small>1,500 × 1,200</small></button>
+      <button type="button" data-win="bath">+ 욕실창<small>600 × 800</small></button>
+    </div>
+    <div id="winList" style="display:flex;flex-direction:column;gap:8px"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-opt">
+    <h2 id="h-opt">필름과 지역</h2>
+    <div class="seg" role="radiogroup" aria-label="필름 종류">
+      <label><input type="radio" name="grade" value="basic" id="grade-basic" checked>기본 필름<small>단색·일반 우드</small></label>
+      <label><input type="radio" name="grade" value="premium" id="grade-premium">고급 필름<small>무광·프리미엄 우드·메탈</small></label>
+      <label><input type="radio" name="grade" value="fire" id="grade-fire">방염 필름<small>상가·다중이용시설</small></label>
+    </div>
+    <div class="seg" role="radiogroup" aria-label="지역">
+      <label><input type="radio" name="area" value="대구" id="area-daegu" checked>대구</label>
+      <label><input type="radio" name="area" value="경북" id="area-gb">경북</label>
+      <label><input type="radio" name="area" value="그 외 지역" id="area-etc">그 외</label>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-more">
+    <h2 id="h-more">해당되면 체크 <small>금액은 사진을 보고 따로 안내해요</small></h2>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="c-old" data-cond="기존 필름이 들뜨거나 벗겨진 곳이 있어요">기존 필름이 들뜨거나 벗겨진 곳이 있어요</label>
+      <label class="check"><input type="checkbox" id="c-dent" data-cond="찍힘·패인 곳·부풀어 오른 곳이 있어요">찍힘·패인 곳·부풀어 오른 곳이 있어요</label>
+      <label class="check"><input type="checkbox" id="c-wet" data-cond="물이 닿던 곳(싱크대 아래·화장실 문 아래)이 상했어요">물 닿던 곳(싱크대 아래·화장실 문 아래)이 상했어요</label>
+    </div>
+    <div class="divider"></div>
+    <p class="note">샷시 말고 아래 부위는 크기·구조 차이가 커서 사진을 보고 견적을 드려요.</p>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="x-middoor" data-extra="중문">중문</label>
+      <label class="check"><input type="checkbox" id="x-molding" data-extra="몰딩·걸레받이">몰딩·걸레받이</label>
+      <label class="check"><input type="checkbox" id="x-vanity" data-extra="화장대">화장대</label>
+      <label class="check"><input type="checkbox" id="x-wall" data-extra="아트월·벽면">아트월·벽면</label>
+      <label class="check"><input type="checkbox" id="x-etc" data-extra="그 밖의 가구">그 밖의 가구</label>
+    </div>
+  </section>
+
+  <section class="card" id="result" aria-labelledby="h-result" aria-live="polite">
+    <h2 id="h-result">예상 비용</h2>
+    <div id="resBody"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-ask">
+    <h2 id="h-ask">정확한 견적 받기</h2>
+    <p class="note" style="margin:0">아래 버튼을 누르면 고른 내용이 복사돼요. 카카오톡 채널 대화창에 붙여 넣고 사진만 같이 보내 주세요.</p>
+    <ol class="photos">
+      <li>시공할 공간 전체 사진</li>
+      <li>상한 곳이 있으면 가까이 찍은 사진</li>
+      <li>지역(동네까지)</li>
+      <li>원하는 색이나 분위기</li>
+    </ol>
+    <div class="cta">
+      <a class="btn kakao" id="kakaoBtn" href="https://pf.kakao.com/_gzWJX/chat" target="_blank" rel="noopener">고른 내용 복사하고 카카오톡 문의</a>
+      <a class="btn line" href="tel:01071111126">전화 문의</a>
+      <div class="phone">전화가 안 걸리면 <b>010-7111-1126</b> · 카카오톡에서 <b>착붙인테리어필름</b> 검색</div>
+      <div id="copied" role="status"></div>
+      <textarea id="copyBox" hidden readonly aria-label="복사할 견적 내용"></textarea>
+    </div>
+  </section>
+
+  <footer>착붙인테리어필름 | StickTo_film · 대구·경북 인테리어필름 시공<br>이 계산기는 참고용 예상 범위이며 확정 견적이 아닙니다.</footer>
+</div>
+
+<div class="bar" aria-hidden="false">
+  <div class="in">
+    <div><div class="k">예상 범위</div><div class="v" id="barV">-</div></div>
+    <a href="#result">자세히 보기</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ── 단가 (근거: 견적·시공기록표 기준값/간편견적/단가산출 시트, 2026-11-11 사용자 확인값) ──
+  // 문짝 단가: 평평 10만 / 줄 홈 12만 / 사각 홈 15만 / 몰딩·유리 15만~ (사용자 확인)
+  // 문+문틀 세트 = 문 단가 + 문틀 8만 (민자 세트 18만, 조사 평균) / 문틀만 10만
+  var DOOR = {flat:100000, line:120000, square:150000, mold:150000};
+  var SHAPE_NAME = {flat:"평평한 문", line:"긴 줄 홈", square:"사각 홈", mold:"볼록 몰딩·유리 칸"};
+  var FRAME_IN_SET = 80000, FRAME_ONLY = 100000;
+  var P = {
+    entrance:250000,   // 현관문 실내측: 시세 25만~40만의 하단
+    shoeLow:150000,    // 낮은 신발장: 시세 시작가 15만~
+    shoeTallDoor:65000,// 천장형 신발장 문짝 6.5만 + 측판 6만 (단가산출)
+    shoeSide:60000,
+    sinkDoor:35000,    // 싱크대 문·서랍 3.5만 + 측판·걸레받이 7만 (30평대 18짝 = 70만)
+    sinkSide:70000,
+    fridge:250000,     // 냉장고장 겉면: 시세 25만~55만의 하단
+    island:255000,     // 아일랜드 중형: 단가산출 25.5만
+    closetSolo:50000,  // 붙박이장 단독 짝당 5만 (사용자 확인)
+    closetBundle:43000,// 전체 공사와 같이 할 때 짝당 약 4.3만 (울산 현장)
+    closetSmallMin:400000, closetSmallMax:500000 // 붙박이장만 문 3~4짝: 40~50만 (사용자 확인)
+  };
+  // 필름 사용량(m): 사용자 경험치·조사 추정
+  var M = {set:6.5, door:4.5, frame:2.5, entrance:5, shoeLow:3, shoeTallDoor:1.15, shoeSide:2.4,
+           sinkDoor:0.425, sinkSide:2.5, fridge:10.2, island:5.5, closetDoor:1.15, closetSide:2.4};
+  // 필름 종류별 m당 추가 (자재 차이만, 기본 6,500원 대비): 고급 +3,000~6,500 / 방염 +4,000~8,500
+  var GRADE = {basic:[0,0,"기본 필름"], premium:[3000,6500,"고급 필름"], fire:[4000,8500,"방염 필름"]};
+  var SPREAD = 0.2;          // 현장 상태·치수 차이 폭 (위쪽 +20%)
+  var MIN_JOB = 100000;      // 최소 시공 금액 (당근 "10만원부터")
+  var BUNDLE_FROM = 500000;  // 다른 부위 합계가 이 이상이면 붙박이장 묶음 단가
+
+  // ── 샷시: 인수인계 4-2 과거 단가 (작은·큰 창 15만, 거실 대형 20만, 거실 이중창 60만) ──
+  // 가로 3m 이상이면 창 종류 상관없이 대형(사용자 확인 2026-11-19). 기본 크기: 거실 4500x2300(사용자 예시), 나머지는 유리지갑 24·34평 표준 프리셋(2026-09). 이중창(안쪽+바깥쪽 두 겹)은 거실 60만, 나머지는 한 겹 x2(가정)
+  // 기본 크기: 사용자 제공 '아파트 샷시 대표 규격표'(30~34평, 사전 견적용 추정치, 2026-11-19)
+  // 필름 m 추정: 바깥 틀 둘레 x (틀 폭 + 감싸기 5cm) + 창짝(한 겹 2짝) 둘레 x 13cm, 합친 면적 ÷ 122cm 폭 ÷ 재단 효율 85%
+  //  틀 폭: 단창 130mm, 이중창 250mm (사용자 제공 프레임 폭 표). 영림 블로그 계산법(긴 쪽+10cm, 두 겹 x2)과 비교해 비슷함
+  var WIN_TYPES = {lbal:["거실 전면 발코니창",4500,2200,true], mbal:["안방 발코니창",3000,2200,false], lin:["거실 내창",3000,2100,true], min:["안방 내창",2400,1800,true], r1:["작은방 1",1800,1500,true], r2:["작은방 2",1500,1500,true], kit:["주방창",1500,1200,false], util:["다용도실창",1500,1200,false], bath:["욕실창",600,800,false]};
+  var WIN_SINGLE = 150000, WIN_BIG = 200000, WIN_BIG_DOUBLE = 600000, WIN_BIG_FROM = 3000;
+  var wins = [], winSeq = 0;
+  function winPrice(w){ var big = w.w >= WIN_BIG_FROM; if(w.dbl) return big ? WIN_BIG_DOUBLE : WIN_SINGLE*2; return big ? WIN_BIG : WIN_SINGLE; }
+  function winMeters(w){
+    var W=w.w/1000, H=w.h/1000, frame=(w.dbl?0.25:0.13)+0.05, sashes=w.dbl?4:2;
+    var area = 2*(W+H)*frame + sashes*2*(W/2+H)*0.13;
+    return area/1.22/0.85;
+  }
+  function renderWins(){
+    var box = document.getElementById("winList"); box.innerHTML = "";
+    wins.forEach(function(w){
+      var d = document.createElement("div"); d.className = "win";
+      d.innerHTML = '<div class="top"><b>'+w.name+'</b><button type="button" class="del">빼기</button></div>'+
+        '<div class="size">가로 <input type="number" inputmode="numeric" id="ww-'+w.id+'" value="'+w.w+'" aria-label="가로 mm"> × 세로 <input type="number" inputmode="numeric" id="wh-'+w.id+'" value="'+w.h+'" aria-label="세로 mm"> mm</div>'+
+        '<label class="check"><input type="checkbox" id="wd-'+w.id+'"'+(w.dbl?' checked':'')+'>안쪽·바깥쪽 두 겹 다 (이중창)</label>'+
+        '<div class="meta"></div>';
+      var ins = d.querySelectorAll("input");
+      ins[0].oninput = function(){ w.w = parseInt(ins[0].value,10)||0; calc(); };
+      ins[1].oninput = function(){ w.h = parseInt(ins[1].value,10)||0; calc(); };
+      ins[2].onchange = function(){ w.dbl = ins[2].checked; calc(); };
+      d.querySelector(".del").onclick = function(){ wins = wins.filter(function(x){return x!==w}); renderWins(); calc(); };
+      w.meta = d.querySelector(".meta");
+      box.appendChild(d);
+    });
+  }
+  document.querySelectorAll("[data-win]").forEach(function(b){
+    b.onclick = function(){ var t = WIN_TYPES[b.getAttribute("data-win")]; wins.push({id:++winSeq, name:t[0], w:t[1], h:t[2], dbl:t[3]}); renderWins(); calc(); };
+  });
+
+  var KEYS = ["set","door","frame","sink","fridge","island","entrance","shoeLow","shoeTall","closet"];
+  var q = {}; KEYS.forEach(function(k){q[k]=0});
+  var inputs = {};
+
+  document.querySelectorAll(".step").forEach(function(box){
+    var k = box.getAttribute("data-for");
+    box.innerHTML = '<button type="button" aria-label="줄이기">−</button><input type="number" inputmode="numeric" min="0" max="60" value="0" id="n-'+k+'" aria-label="개수"><button type="button" aria-label="늘리기">+</button>';
+    var b = box.querySelectorAll("button"), inp = box.querySelector("input");
+    inputs[k] = inp;
+    b[0].onclick = function(){ set(k, q[k]-1); clearPreset(); };
+    b[1].onclick = function(){ set(k, q[k]+1); clearPreset(); };
+    inp.oninput = function(){ set(k, parseInt(inp.value,10)||0, true) };
+  });
+  function set(k, v, typing){ v=Math.max(0,Math.min(60,v)); q[k]=v; if(!typing) inputs[k].value=v; calc(); }
+  function clearPreset(){ document.querySelectorAll(".presets button").forEach(function(b){ b.classList.remove("on"); b.querySelector("i").textContent="넣기"; }); var m=document.getElementById("presetMsg"); if(m) m.textContent=""; }
+  document.querySelectorAll("input[type=radio],input[type=checkbox]").forEach(function(el){ el.onchange = calc; });
+
+  var PRESETS = {
+    doors:{set:4}, kitchen:{sink:18}, entry:{entrance:1, shoeTall:4},
+    reset:{}
+  };
+  document.querySelectorAll("[data-preset]").forEach(function(btn){
+    btn.onclick = function(){
+      var p = PRESETS[btn.getAttribute("data-preset")];
+      KEYS.forEach(function(k){ q[k]=p[k]||0; inputs[k].value=q[k]; });
+      if(btn.getAttribute("data-preset")==="reset"){ wins=[]; renderWins(); }
+      calc();
+      document.querySelectorAll(".presets button").forEach(function(b){ b.classList.toggle("on", b===btn); b.querySelector("i").textContent = b===btn ? "✓ 들어감" : "넣기"; });
+      var name = btn.getAttribute("data-name"), bar = document.getElementById("barV").textContent;
+      document.getElementById("presetMsg").textContent = name ? name+" 넣었어요. 예상 "+bar+" · 아래에서 개수를 바꿔 보세요." : "모두 비웠어요. 아래에서 직접 골라 주세요.";
+    };
+  });
+
+  function won(n){ return Math.round(n/10000).toLocaleString("ko-KR") + "만"; }
+  function val(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:""; }
+
+  var lastText = "";
+  function calc(){
+    var shape = val("shape"), grade = GRADE[val("grade")], area = val("area");
+    var lines = [], base = 0, meters = 0;
+    function add(label, amount, m, desc){ if(amount<=0) return; lines.push([label, amount, desc||""]); base += amount; meters += m; }
+
+    add("방문 문+문틀 "+q.set+"세트 ("+SHAPE_NAME[shape]+")", q.set*(DOOR[shape]+FRAME_IN_SET), q.set*M.set);
+    add("방문 문짝만 "+q.door+"짝 ("+SHAPE_NAME[shape]+")", q.door*DOOR[shape], q.door*M.door);
+    add("문틀만 "+q.frame+"개", q.frame*FRAME_ONLY, q.frame*M.frame);
+    if(q.sink>0) add("싱크대 문·서랍 "+q.sink+"개 + 옆판·걸레받이", q.sink*P.sinkDoor+P.sinkSide, q.sink*M.sinkDoor+M.sinkSide);
+    add("냉장고장 "+q.fridge+"세트", q.fridge*P.fridge, q.fridge*M.fridge);
+    add("아일랜드 "+q.island+"개", q.island*P.island, q.island*M.island);
+    add("현관문 "+q.entrance+"개", q.entrance*P.entrance, q.entrance*M.entrance);
+    add("신발장 낮은형 "+q.shoeLow+"개", q.shoeLow*P.shoeLow, q.shoeLow*M.shoeLow);
+    wins.forEach(function(w){
+      if(w.w<=0||w.h<=0){ if(w.meta) w.meta.textContent="가로·세로를 넣어 주세요"; return; }
+      var pr = winPrice(w);
+      add("샷시 "+w.name+" "+w.w+"×"+w.h+(w.dbl?" 두 겹":" 한 겹"), pr, winMeters(w));
+      if(w.meta) w.meta.textContent = (w.w>=WIN_BIG_FROM?"가로 3m 이상 큰 창 기준":"일반 창 기준")+" · 약 "+won(pr)+"원~ · 필름 약 "+winMeters(w).toFixed(1)+"m";
+    });
+    if(q.shoeTall>0) add("신발장 천장형 문 "+q.shoeTall+"짝 + 옆판", q.shoeTall*P.shoeTallDoor+P.shoeSide, q.shoeTall*M.shoeTallDoor+M.shoeSide);
+
+    // 붙박이장
+    var closetLow = 0, closetHigh = 0, closetOnlySmall = false;
+    if(q.closet>0){
+      var others = base;
+      var unit = others >= BUNDLE_FROM ? P.closetBundle : P.closetSolo;
+      closetLow = q.closet*unit;
+      closetHigh = closetLow*(1+SPREAD);
+      var desc = others >= BUNDLE_FROM ? "다른 부위와 같이 해서 짝당 약 4.3만" : "짝당 5만";
+      if(others===0 && closetLow < P.closetSmallMin){ closetLow=P.closetSmallMin; closetHigh=P.closetSmallMax; closetOnlySmall=true; desc="문이 적어도 준비·장비는 같아 기본 40만~"; }
+      lines.push(["붙박이장 문 "+q.closet+"짝", closetLow, desc]);
+      meters += q.closet*M.closetDoor + M.closetSide;
+    }
+
+    var gradeLow = meters*grade[0], gradeHigh = meters*grade[1];
+    var low = base + closetLow + gradeLow;
+    var high = base*(1+SPREAD) + closetHigh + gradeHigh;
+    var minApplied = false;
+    if(low>0 && low<MIN_JOB){ low=MIN_JOB; high=Math.max(high,MIN_JOB*1.5); minApplied=true; }
+    low = Math.floor(low/10000)*10000; high = Math.ceil(high/10000)*10000;
+
+    var conds = [].map.call(document.querySelectorAll("[data-cond]:checked"), function(e){return e.getAttribute("data-cond")});
+    var extras = [].map.call(document.querySelectorAll("[data-extra]:checked"), function(e){return e.getAttribute("data-extra")});
+
+    var out = document.getElementById("resBody"), bar = document.getElementById("barV");
+    if(lines.length===0){
+      out.innerHTML = '<p class="empty">위에서 개수를 골라 주세요. '+(extras.length?'체크한 부위('+extras.join(", ")+')는 사진을 보고 견적을 드려요.':'')+'</p>';
+      bar.textContent = extras.length ? "사진 견적" : "-";
+      lastText = buildText([], 0, 0, 0, grade, area, conds, extras);
+      return;
+    }
+    var html = '<div class="big">약 '+won(low)+' ~ '+won(high)+'<small> 원</small></div>';
+    html += '<div class="film"><span class="roll" aria-hidden="true"></span><span>필름 약 <b>'+Math.round(meters)+'m</b> 들어가는 작업이에요 · '+grade[2]+'</span></div>';
+    html += '<table><tbody>';
+    lines.forEach(function(l){ html += '<tr><td>'+l[0]+(l[2]?'<br><span class="note">'+l[2]+'</span>':'')+'</td><td>'+won(l[1])+'~</td></tr>'; });
+    if(gradeHigh>0) html += '<tr><td>'+grade[2]+'으로 바꾸는 차액<br><span class="note">제품마다 달라요</span></td><td>+'+won(gradeLow)+'~'+won(gradeHigh)+'</td></tr>';
+    if(minApplied) html += '<tr><td>최소 시공 금액<br><span class="note">작은 작업도 출장·준비는 같아요</span></td><td>10만~</td></tr>';
+    html += '</tbody></table>';
+    var flags = [];
+    if(conds.length) flags.push("체크한 상태("+conds.length+"개)는 바탕 보수가 필요할 수 있어 사진을 보고 추가 비용을 안내해요.");
+    if(extras.length) flags.push(extras.join(", ")+"은(는) 위 금액에 빠져 있어요. 사진을 보고 따로 안내해요.");
+    if(area!=="대구") flags.push(area+"은 거리와 일정에 따라 출장 가능 여부와 비용을 상담 때 알려 드려요.");
+    if(flags.length) html += '<div class="flag">'+flags.map(function(f){return '<span>'+f+'</span>'}).join("")+'</div>';
+    html += '<p class="note">실측 전 예상 범위예요. 실제 치수, 바탕 상태, 철거·보수 필요 여부, 고르신 필름에 따라 달라질 수 있어요. 부가세 처리는 상담 때 안내해요.</p>';
+    out.innerHTML = html;
+    bar.textContent = won(low)+" ~ "+won(high)+"원";
+    lastText = buildText(lines, low, high, meters, grade, area, conds, extras);
+  }
+
+  function buildText(lines, low, high, meters, grade, area, conds, extras){
+    var t = ["[착붙 견적 계산기에서 보냄]", "지역: "+area+" (동네: )"];
+    if(lines.length){
+      t.push("고른 부위:");
+      lines.forEach(function(l){ t.push("- "+l[0]); });
+      t.push("필름: "+grade[2]);
+      t.push("계산기 예상: 약 "+won(low)+" ~ "+won(high)+"원");
+    }
+    if(extras.length) t.push("사진 견적 부탁: "+extras.join(", "));
+    if(conds.length) t.push("상태: "+conds.join(" / "));
+    t.push("사진 같이 보낼게요. 정확한 견적 부탁드려요.");
+    return t.join("\n");
+  }
+
+  document.getElementById("kakaoBtn").addEventListener("click", function(){
+    var msg = document.getElementById("copied"), box = document.getElementById("copyBox");
+    function fallback(){ box.hidden=false; box.value=lastText; box.focus(); box.select(); msg.textContent="자동 복사가 안 돼서 아래 글을 길게 눌러 복사해 주세요."; }
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(lastText).then(function(){ msg.textContent="복사했어요. 카카오톡 대화창에 붙여 넣어 주세요."; }, fallback);
+      } else fallback();
+    }catch(e){ fallback(); }
+  });
+
+  // 처음 화면: 예시로 방문 3세트 + 현관문 1개
+  set("set",3); set("entrance",1);
+  document.getElementById("resBody").insertAdjacentHTML("afterbegin",'<p class="note" style="margin:0 0 6px">예시: 방문 3세트 + 현관문. 개수를 바꿔 보세요.</p>');
+})();
+</script>
+</body></html>
