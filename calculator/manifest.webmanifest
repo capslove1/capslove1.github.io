@@ -1,0 +1,15 @@
+{
+  "name": "착붙 우리 집 필름 견적 계산기",
+  "short_name": "필름 견적",
+  "description": "부위 개수만 고르면 인테리어필름 예상 비용 범위를 보여 주는 계산기 (착붙인테리어필름)",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eceeef",
+  "theme_color": "#2447c8",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

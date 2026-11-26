@@ -9,6 +9,13 @@
 <meta property="og:title" content="우리 집 필름 견적 계산기 | 착붙인테리어필름">
 <meta property="og:description" content="방문·싱크대·현관문·신발장 개수만 고르면 예상 비용 범위가 나와요. 무료, 가입 없음.">
 <meta property="og:image" content="https://capslove1.github.io/img/kitchen-gray-wide.jpg">
+<!-- 앱(홈 화면 설치)용 설정 -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2447c8">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="필름 견적">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>우리 집 필름 견적 계산기</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -118,6 +125,9 @@ ol.photos{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:
 .bar .v{font-family:var(--f-head);font-weight:800;font-size:19px;font-variant-numeric:tabular-nums}
 .bar .k{font-size:11.5px;color:var(--muted)}
 .bar a{background:var(--brand);color:var(--brand-ink);border-radius:10px;padding:10px 14px;font-weight:700;text-decoration:none;font-size:14px;white-space:nowrap}
+.install{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--brand-soft);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.install button{flex:none;border:0;background:var(--brand);color:var(--brand-ink);border-radius:9px;padding:8px 12px;font:700 13.5px var(--f-body);cursor:pointer}
+#iosTip{font-size:13px;color:var(--ink);margin:0}
 footer{font-size:12px;color:var(--muted);text-align:center;padding-top:6px}
 @media (prefers-reduced-motion:no-preference){.big{transition:color .2s}}
 </style>
@@ -127,6 +137,11 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:6px}
     <div class="brand">착붙인테리어필름 | StickTo_film</div>
     <h1>우리 집 필름 견적 계산기</h1>
     <p class="lead">바꾸고 싶은 곳의 개수만 고르면 예상 비용 범위가 바로 나와요. 무료이고 가입도 없어요.</p>
+    <div class="install" id="installBox" hidden>
+      <span id="installText">휴대폰 홈 화면에 앱처럼 깔아 두고 바로 열 수 있어요.</span>
+      <button type="button" id="installBtn">앱으로 설치</button>
+    </div>
+    <p id="iosTip" hidden>아이폰: 아래쪽 공유 버튼(네모에 화살표) → "홈 화면에 추가"를 누르면 앱처럼 깔려요.</p>
     <div class="chips"><span class="chip">대구·경북</span><span class="chip">개수만 고르면 끝</span><span class="chip">실측 전 예상 범위</span></div>
   </header>
 
@@ -450,6 +465,22 @@ footer{font-size:12px;color:var(--muted);text-align:center;padding-top:6px}
       } else fallback();
     }catch(e){ fallback(); }
   });
+
+  // ── 앱 설치(홈 화면에 추가) ──
+  var deferred = null, box = document.getElementById("installBox"), ibtn = document.getElementById("installBtn");
+  var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+  if(!standalone){
+    window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); deferred = e; box.hidden = false; });
+    if(/iphone|ipad|ipod/i.test(navigator.userAgent)) document.getElementById("iosTip").hidden = false;
+  }
+  ibtn.onclick = function(){
+    if(!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function(){ deferred = null; box.hidden = true; });
+  };
+  if("serviceWorker" in navigator && location.protocol === "https:" && /github\.io$/.test(location.hostname)){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  }
 
   // 처음 화면: 예시로 방문 3세트 + 현관문 1개
   set("set",3); set("entrance",1);
